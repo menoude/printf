@@ -18,10 +18,16 @@ HEADER = ft_printf.h
 BINARIES =	$(SRC:.c=.o)
 
 all: $(NAME)
-$(NAME): $(BINARIES)
+	./a.out
+$(NAME): $(BINARIES) test.o
 	$(MAKE) -C $(DIR_LIB)
 	cp ./libft/libft.a ./$(NAME)
 	ar rcs $(NAME) $(BINARIES)
+	gcc test.o $(NAME)
+
+test.o: test.c
+	gcc -Wall -Werror -Wextra -c $<
+
 %.o: %.c
 	gcc -Wall -Werror -Wextra -c $<
 clean:

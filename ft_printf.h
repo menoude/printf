@@ -13,14 +13,11 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include <stdlib.h>
-# include "./libft/includes/libft.h"
-
+#include <stdlib.h>
+#include "./libft/includes/libft.h"
+#include <stdarg.h>
 # include <stdio.h> // a enlever !!!
 
-typedef struct	s_env
-{
-}				t_env;
+int   ft_printf(char *format, ...);
 
-int   ft_printf(char *safasafasfa);
 #endif
