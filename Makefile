@@ -17,25 +17,27 @@ SRC = ft_printf.c
 HEADER = ft_printf.h
 BINARIES =	$(SRC:.c=.o)
 
-all: $(NAME)
-	./a.out
-$(NAME): $(BINARIES) test.o
-	$(MAKE) -C $(DIR_LIB)
-	cp ./libft/libft.a ./$(NAME)
-	ar rcs $(NAME) $(BINARIES)
-	gcc test.o $(NAME)
+all: $(NAME) test.o
+	gcc test.o $(NAME) #a enlever
+	@./a.out #a enlever
 
 test.o: test.c
 	gcc -Wall -Werror -Wextra -c $<
 
+$(NAME): $(BINARIES)
+	$(MAKE) -C $(DIR_LIB)
+	cp ./libft/libft.a ./$(NAME)
+	ar rcs $(NAME) $(BINARIES)
+
 %.o: %.c
 	gcc -Wall -Werror -Wextra -c $<
+
 clean:
 	$(MAKE) -C $(DIR_LIB) clean
-	/bin/rm -f $(BINARIES)
+	/bin/rm -f $(BINARIES) test.o ##a enlever
 fclean: clean
 	$(MAKE) -C $(DIR_LIB) fclean
-	/bin/rm -f $(NAME)
+	/bin/rm -f $(NAME) a.out #a enlever
 re: fclean all
 
 .PHONY: all clean fclean re%

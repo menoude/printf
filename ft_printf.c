@@ -3,14 +3,31 @@
 int   ft_printf(char *format, ...)
 {
   va_list list;
+  int i;
 
   va_start(list, format);
-  int i = 0;
-  //
-  while (i < 2)
+  i = 0;
+  while (format[i])
   {
-    printf("%s", va_arg(list, char *));
-    i++;
+    if (format[i] == '%')
+    {
+        if (format[i + 1] == 's')
+        {
+          i++;
+          ft_putstr(va_arg(list, char *));
+        }
+        else if (format[i + 1] == 'd')
+        {
+          i++;
+          ft_putnbr(va_arg(list, int));
+        }
+    }
+    else
+    {
+
+    ft_putchar(format[i]);
+  }
+  i++;
   }
   return 0;
 }

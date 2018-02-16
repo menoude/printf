@@ -2,7 +2,7 @@
 
 int main(void)
 {
-  ft_printf("hey ho\n", "hey ha\n", "he he\n","haaho\n");
+  ft_printf("un, %s, %d, %s, %s, six\n", "deux", 3, "quatre", "cinq");
   //
   return 0;
 }
