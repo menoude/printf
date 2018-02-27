@@ -13,16 +13,17 @@
 NAME = libftprintf.a
 DIR_LIB = libft
 DIR_SRC = srcs
-SRC = ft_printf.c
+SRC = ft_printf.c helpers.c buffer.c process.c
 HEADER = ft_printf.h
 BINARIES =	$(SRC:.c=.o)
+CC = gcc -Wall -Werror -Wextra
 
 all: $(NAME) test.o
-	gcc test.o $(NAME) #a enlever
+	$(CC) test.o $(NAME) #a enlever
 	@./a.out #a enlever
 
 test.o: test.c
-	gcc -Wall -Werror -Wextra -c $<
+	gcc -c $<
 
 $(NAME): $(BINARIES)
 	$(MAKE) -C $(DIR_LIB)
@@ -30,7 +31,7 @@ $(NAME): $(BINARIES)
 	ar rcs $(NAME) $(BINARIES)
 
 %.o: %.c
-	gcc -Wall -Werror -Wextra -c $<
+	$(CC) -c $<
 
 clean:
 	$(MAKE) -C $(DIR_LIB) clean
