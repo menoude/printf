@@ -1,31 +1,24 @@
 #include "ft_printf.h"
 
-static void init_printer(t_printer *printer)
-{
-  printer->buffer_index = 0;
-  printer->nb_printed = 0;
-  ft_bzero(printer->buffer, BUFFER_SIZE);
-}
-
 int   ft_printf(char *format, ...)
 {
-  va_list list;
+  t_env e;
   int i;
-  t_printer printer;
-  va_start(list, format);
 
-  init_printer(&printer);
+  helper_init_e(&e);
+  va_start(e.args, format);
   i = 0;
   while (format[i])
   {
     if (format[i] == '%')
-      process_conversion(format, &printer, &i);
+      conversion_start(&e, format + i, &i);
     else
     {
-      add_to_buffer((void *)format + i, &printer, 1);
+      buffer_fill(format + i, &e, 1);
       i++;
     }
   }
-  buffer_print(&printer);
-  return printer.nb_printed;
+  buffer_print(&e);
+  va_end(e.args);
+  return e.nb_printed;
 }

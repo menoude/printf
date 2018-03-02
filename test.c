@@ -2,9 +2,9 @@
 
 int main(void)
 {
-  ft_printf("there is a placeholder right here: %s, now it's over\n", "to fill");
+  // ft_printf("placeholder right here: %s, it's over\n", "to fill", "or not to", "fill", 4);
 
-  printf("there is a placeholder right here: %s, now it's over\n", "to fill");
+  printf("placeholder right here: %3i, it's over\n", "to fill");
 
   return 0;
 }
