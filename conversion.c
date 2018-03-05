@@ -21,11 +21,7 @@ void conversion_set(t_env *e, char *format, int *index)
 }
 // tant que j'ai pas un type ou un pourcentage
 // je lis chaque caractere
-// s'il est dans les formats et qu'il n'y a pas de width/precision/length/type, alors on prend en compte ce qu'il veut dire
-// sinon s'il est dans les width et qu'il n'y a pas de prec/len/type, j'applique au bon critere
-// sinon s'il est dans les precs et qu'il n'y a pas de length / type alors j'applique
-// sinon si c'est un length, j'applique
-// sinon si c'est un type, j'applique et je break
+
 // sinon (autre carac, dont null byte) je lance une erreur
 }
 
