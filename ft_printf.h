@@ -38,11 +38,12 @@ int   ft_printf(char *format, ...);
 
 void helper_error(int code);
 void helper_init_e(t_env *e);
+int helper_substr(char *haystack, char *needle);
 
 void buffer_fill(char *location, t_env *e, int length);
 void buffer_print(t_env *e);
 
 void conversion_start(t_env *e, char *format, int *index);
-void conversion_parse(t_env *e, char *format, int *index);
+void conversion_set(t_env *e, char *format, int *index);
 
 #endif
