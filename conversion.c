@@ -1,33 +1,30 @@
 #include "ft_printf.h"
 
-void conversion_set(t_env *e, char *format, int *index)
+void conversion_read(t_env *e, char *format, int *index)
 {
   int i;
 
   (void)e;
   i = *index;
-  while (!flag_type(e, format + i))
+  while (!find_type(format[i]))
   {
-    if (flag_format(e, format + i) || flag_width(e, format + i)
-    || flag_precision(e, format + i) || flag_length(e, format + i) || format[i] == '%')
+    if (find_format(e, format[i]) || find_width(e, format[i])
+    || find_precision(e, format[i]) || find_length(e, format + i))
     {
-      conversion_flag(format + i);
+      // fonction of that character
       i++;
     }
+    else if (format[i] == '%')
+    // fonction
+    (void)e;
     else
       helper_error(2);
   }
-  conversion_flag(format + i);
-}
-// tant que j'ai pas un type ou un pourcentage
-// je lis chaque caractere
-
-// sinon (autre carac, dont null byte) je lance une erreur
 }
 
 void conversion_start(t_env *e, char *format, int *index)
 {
   // conversion_init
-  conversion_set(e, format, index);
-  // conversion_run
+  conversion_read(e, format, index);
+  // conversion_apply
 }

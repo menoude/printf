@@ -30,6 +30,12 @@ typedef struct s_env
     int precision;
     int length;
     int type;
+    int alternate;
+    int sign;
+    int padding;
+    int precision_nb;
+    int alignment;
+
     va_list args;
 }             t_env;
 
@@ -38,12 +44,18 @@ int   ft_printf(char *format, ...);
 
 void helper_error(int code);
 void helper_init_e(t_env *e);
-int helper_substr(char *haystack, char *needle);
+int helper_substr(char *haystack, char needle);
 
 void buffer_fill(char *location, t_env *e, int length);
 void buffer_print(t_env *e);
 
 void conversion_start(t_env *e, char *format, int *index);
 void conversion_set(t_env *e, char *format, int *index);
+
+int find_format(t_env *e, char c);
+int find_width(t_env *e, char c);
+int find_precision(t_env *e, char c);
+int find_length(t_env *e, char *c);
+int find_type(char c);
 
 #endif
