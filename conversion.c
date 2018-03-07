@@ -20,12 +20,10 @@ void conversion_read(t_env *e, char *format, int *index)
 
 void conversion_crack(t_env *e, char *flag)
 {
-  static void (*handlers[256]) (t_env *);
   int action;
 
   action = (int) *flag;
-  handlers['d'] = &handler_d;
-  handlers[action](e);
+  handler(action)(e);
 }
 
 void conversion_start(t_env *e, char *format, int *index)

@@ -44,6 +44,7 @@ int   ft_printf(char *format, ...);
 
 void helper_error(int code);
 void helper_init_e(t_env *e);
+void helper_set_handlers(t_env *e);
 int helper_substr(char *haystack, char needle);
 
 void buffer_fill(t_env *e, char *str, int length);
@@ -59,6 +60,21 @@ int find_precision(t_env *e, char c);
 int find_length(t_env *e, char *c);
 int find_type(char c);
 
+void (*handler(int action))(t_env *e);
 void handler_d(t_env *e);
+void handler_s(t_env *e);
+void handler_p(t_env *e);
+void handler_S(t_env *e);
+void handler_D(t_env *e);
+void handler_i(t_env *e);
+void handler_o(t_env *e);
+void handler_O(t_env *e);
+void handler_x(t_env *e);
+void handler_X(t_env *e);
+void handler_c(t_env *e);
+void handler_C(t_env *e);
+void handler_u(t_env *e);
+void handler_U(t_env *e);
+
 
 #endif
