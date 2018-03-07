@@ -1,12 +1,13 @@
 #include "ft_printf.h"
 
-void buffer_fill(char *location, t_env *e, int length)
+void buffer_fill (t_env *e, char *str, int length)
 {
-  int i = 0;
+  int i;
 
+  i = 0;
   while (i < length)
   {
-    e->buffer[e->buffer_index] = location[i];
+    e->buffer[e->buffer_index] = str[i];
     e->buffer_index++;
     i++;
     if (e->buffer_index == BUFFER_SIZE)

@@ -46,16 +46,19 @@ void helper_error(int code);
 void helper_init_e(t_env *e);
 int helper_substr(char *haystack, char needle);
 
-void buffer_fill(char *location, t_env *e, int length);
+void buffer_fill(t_env *e, char *str, int length);
 void buffer_print(t_env *e);
 
 void conversion_start(t_env *e, char *format, int *index);
-void conversion_set(t_env *e, char *format, int *index);
+void conversion_read(t_env *e, char *format, int *index);
+void conversion_crack(t_env *e, char *flag);
 
 int find_format(t_env *e, char c);
 int find_width(t_env *e, char c);
 int find_precision(t_env *e, char c);
 int find_length(t_env *e, char *c);
 int find_type(char c);
+
+void handler_d(t_env *e);
 
 #endif

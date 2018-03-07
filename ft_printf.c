@@ -11,10 +11,10 @@ int   ft_printf(char *format, ...)
   while (format[i])
   {
     if (format[i] == '%')
-      conversion_start(&e, format + i, &i);
+      conversion_start(&e, format, &i);
     else
     {
-      buffer_fill(format + i, &e, 1);
+      buffer_fill(&e, format + i, 1);
       i++;
     }
   }
