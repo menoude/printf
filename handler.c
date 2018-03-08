@@ -25,11 +25,14 @@ void (*handler(int action))(t_env *e)
 
 void handler_d(t_env *e)
 {
-    char *str;
+  char *str;
 
-    str = ft_itoa(va_arg(e->args, int));
-    buffer_fill(e, str, 2);
-    e->type = 1;
+  str = ft_itoa(va_arg(e->args, int));
+  // check le padding minimum
+  // et la precision
+  buffer_fill(e, str, 2);
+  free(str);
+  e->type = 1;
 }
 
 void handler_s(t_env *e)
@@ -44,8 +47,11 @@ void handler_p(t_env *e)
   char *str;
 
   address = (long int) va_arg(e->args, void *);
-  str = ft_itoa(address);
+  printf("%ld\n", address);
+  str = helper_itoa(address);
+
   buffer_fill(e, str, 2);
+  free(str);
   e->type = 1;
 }
 
@@ -55,50 +61,50 @@ void handler_S(t_env *e)
 }
 void handler_D(t_env *e)
 {
-e->type = 1
+  e->type = 1;
 }
 
 void handler_i(t_env *e)
 {
-e->type = 1
+  e->type = 1;
 }
 
 void handler_o(t_env *e)
 {
-e->type = 1
+  e->type = 1;
 }
 
 void handler_O(t_env *e)
 {
-e->type = 1
+  e->type = 1;
 }
 
 void handler_x(t_env *e)
 {
-e->type = 1
+  e->type = 1;
 }
 
 void handler_X(t_env *e)
 {
-e->type = 1
+  e->type = 1;
 }
 
 void handler_c(t_env *e)
 {
-e->type = 1
+  e->type = 1;
 }
 
 void handler_C(t_env *e)
 {
-e->type = 1
+  e->type = 1;
 }
 
 void handler_u(t_env *e)
 {
-e->type = 1
+  e->type = 1;
 }
 
 void handler_U(t_env *e)
 {
-e->type = 1
+  e->type = 1;
 }

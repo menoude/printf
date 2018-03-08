@@ -44,8 +44,8 @@ int   ft_printf(char *format, ...);
 
 void helper_error(int code);
 void helper_init_e(t_env *e);
-void helper_set_handlers(t_env *e);
 int helper_substr(char *haystack, char needle);
+char *helper_itoa(long int n);
 
 void buffer_fill(t_env *e, char *str, int length);
 void buffer_print(t_env *e);
