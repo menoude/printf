@@ -11,7 +11,7 @@ int   ft_printf(char *format, ...)
   while (format[i])
   {
     if (format[i] == '%')
-      conversion_start(&e, format, &i);
+      converter_parse(&e, format, &i);
     else
     {
       buffer_fill(&e, format + i, 1);

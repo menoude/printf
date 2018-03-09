@@ -25,16 +25,22 @@ typedef struct s_env
     char buffer[BUFFER_SIZE];
     int buffer_index;
     int nb_printed;
-    int format;
+
+    int left_align;
+    int alternate_form;
+    int padding_0;
+    // int padding_space;
+    int plus_sign;
+
     int width;
+
     int precision;
+
     int length;
+    int len_short;
+    int len_long;
+
     int type;
-    int alternate;
-    int sign;
-    int padding;
-    int precision_nb;
-    int alignment;
 
     va_list args;
 }             t_env;
@@ -50,31 +56,30 @@ char *helper_itoa(long int n);
 void buffer_fill(t_env *e, char *str, int length);
 void buffer_print(t_env *e);
 
-void conversion_start(t_env *e, char *format, int *index);
-void conversion_read(t_env *e, char *format, int *index);
-void conversion_crack(t_env *e, char *flag);
+void converter_parse(t_env *e, char *format, int *index);
+void converter_convert(t_env *e, char *flag);
 
-int find_format(t_env *e, char c);
-int find_width(t_env *e, char c);
-int find_precision(t_env *e, char c);
-int find_length(t_env *e, char *c);
-int find_type(char c);
+int format_find(t_env *e, char format);
+int width_find(t_env *e, char *width);
+int precision_find(t_env *e, char *precision);
+int length_find(t_env *e, char *length);
+int type_find(char type);
 
-void (*handler(int action))(t_env *e);
-void handler_d(t_env *e);
-void handler_s(t_env *e);
-void handler_p(t_env *e);
-void handler_S(t_env *e);
-void handler_D(t_env *e);
-void handler_i(t_env *e);
-void handler_o(t_env *e);
-void handler_O(t_env *e);
-void handler_x(t_env *e);
-void handler_X(t_env *e);
-void handler_c(t_env *e);
-void handler_C(t_env *e);
-void handler_u(t_env *e);
-void handler_U(t_env *e);
-
+void (*types(int action))(t_env *e);
+void type_d_i(t_env *e);
+void type_s(t_env *e);
+void type_p(t_env *e);
+void type_S(t_env *e);
+void type_D(t_env *e);
+void type_i(t_env *e);
+void type_o(t_env *e);
+void type_O(t_env *e);
+void type_x(t_env *e);
+void type_X(t_env *e);
+void type_c(t_env *e);
+void type_C(t_env *e);
+void type_u(t_env *e);
+void type_U(t_env *e);
+void type_percent(t_env *e);
 
 #endif

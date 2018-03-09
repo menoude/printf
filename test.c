@@ -3,10 +3,10 @@
 int main(void)
 {
   char *pointer;
-  
-  ft_printf("placeholder right here: %s, %p it's over\n", "hey ho", pointer);
 
-  printf("placeholder right here: %%, %p it's over\n", pointer);
+  ft_printf("placeholder right here: %.3d it's over\n", 3);
+
+  printf("placeholder right here: %.3d it's over\n", 3);
 
   return 0;
 }
