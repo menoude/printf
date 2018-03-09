@@ -9,7 +9,7 @@ static void width_handle(t_env *e, char *width)
   n = 0;
   while (ft_isdigit(width[i]))
   {
-    n += n * 10 +  width[i] - 48;
+    n = n * 10 +  width[i] - '0';
     i++;
   }
   e->width = n;

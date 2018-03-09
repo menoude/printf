@@ -1,27 +1,32 @@
 #include "ft_printf.h"
 
-void buffer_fill (t_env *e, char *str, int mode)
+void buffer_fill_char(t_env *e, char c, int n)
 {
   int i;
 
   i = 0;
-  if (mode == 1)
+  while (i < n)
   {
-    e->buffer[e->buffer_index] = str[0];
+    e->buffer[e->buffer_index] = c;
     e->buffer_index++;
+    i++;
     if (e->buffer_index == BUFFER_SIZE)
       buffer_print(e);
   }
-  else if (mode == 2)
+}
+
+void buffer_fill_string(t_env *e, char *str)
+{
+  int i;
+
+  i = 0;
+  while (str[i])
   {
-    while (str[i])
-    {
-      e->buffer[e->buffer_index] = str[i];
-      e->buffer_index++;
-      i++;
-      if (e->buffer_index == BUFFER_SIZE)
-        buffer_print(e);
-    }
+    e->buffer[e->buffer_index] = str[i];
+    e->buffer_index++;
+    i++;
+    if (e->buffer_index == BUFFER_SIZE)
+    buffer_print(e);
   }
 }
 

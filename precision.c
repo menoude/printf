@@ -13,6 +13,7 @@ static void precision_handle(t_env *e, char *precision)
     i++;
   }
   e->precision = n;
+  e->padding_sym = ' ';
 }
 
 int precision_find(t_env *e, char *precision)

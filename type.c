@@ -34,25 +34,22 @@ void type_d_i(t_env *e)
   long int n;
   char *s;
   int len;
+  int padding;
 
   n = va_arg(e->args, long int);
   if (e->len_short)
     n = (n << 48) >> 48;
   else if (!e->len_long)
     n = (n << 32) >> 32;
-  s = helper_itoa(n);
+  s = itoa_long(e, n);
   len = ft_strlen(s);
-  if (len < e->precision)
-  {
-    while (len < e->precision)
-    {
-      buffer_fill(e, e->padding_0 ? "0" : " ", 1);
-      len++;
-    }
-  }
-  if (n > 0 && e->plus_sign)
-    buffer_fill(e, "+", 1);
-  buffer_fill(e, s, 2);
+  e->precision = e->precision < len ? len : e->precision;
+  padding = e->width > e->precision ? e->width - e->precision : 0;
+  buffer_fill_char(e, e->padding_sym, e->left_align ? 0 : padding);
+  buffer_fill_char(e, e->neg ? '-' : '+', (e->plus_sign && !e->neg) || e->neg);
+  buffer_fill_char(e, '0', e->precision > len ? e->precision - len : 0);
+  buffer_fill_string(e, s);
+  buffer_fill_char(e, ' ', e->left_align ? padding : 0);
   free(s);
   e->type = 1;
 }

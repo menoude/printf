@@ -28,8 +28,7 @@ typedef struct s_env
 
     int left_align;
     int alternate_form;
-    int padding_0;
-    // int padding_space;
+    char padding_sym;
     int plus_sign;
 
     int width;
@@ -41,6 +40,7 @@ typedef struct s_env
     int len_long;
 
     int type;
+    int neg;
 
     va_list args;
 }             t_env;
@@ -49,11 +49,15 @@ typedef struct s_env
 int   ft_printf(char *format, ...);
 
 void helper_error(int code);
-void helper_init_e(t_env *e);
 int helper_substr(char *haystack, char needle);
-char *helper_itoa(long int n);
 
-void buffer_fill(t_env *e, char *str, int length);
+char *itoa_long(t_env *e, long int n);
+
+void initializer_init(t_env *e);
+void initializer_reset(t_env *e);
+
+void buffer_fill_char(t_env *e, char c, int n);
+void buffer_fill_string(t_env *e, char *str);
 void buffer_print(t_env *e);
 
 void converter_parse(t_env *e, char *format, int *index);

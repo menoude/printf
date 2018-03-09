@@ -5,16 +5,19 @@ int   ft_printf(char *format, ...)
   t_env e;
   int i;
 
-  helper_init_e(&e);
+  initializer_init(&e);
   va_start(e.args, format);
   i = 0;
   while (format[i])
   {
     if (format[i] == '%')
+    {
       converter_parse(&e, format, &i);
+      initializer_reset(&e);
+    }
     else
     {
-      buffer_fill(&e, format + i, 1);
+      buffer_fill_char(&e, format[i], 1);
       i++;
     }
   }

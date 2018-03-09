@@ -4,9 +4,9 @@ int main(void)
 {
   char *pointer;
 
-  ft_printf("placeholder right here: %.3d it's over\n", 3);
+  ft_printf("placeholder right here: %10.5d it's over\n", 30);
 
-  printf("placeholder right here: %.3d it's over\n", 3);
+  printf("placeholder right here: %10.5d it's over\n", 30);
 
   return 0;
 }

@@ -7,12 +7,10 @@ static void format_handle(t_env *e, char c)
   else if (c == '+')
   {
     e->plus_sign = 1;
-    e->padding_0 = 0;
+    e->padding_sym = ' ';
   }
-  // else if (c == ' ')
-  //   e->padding_space = 1;
   else if (c == '0' && !e->plus_sign)
-    e->padding_0 = 1;
+    e->padding_sym = '0';
   else if (c == '#')
     e->alternate_form = 1;
 }
