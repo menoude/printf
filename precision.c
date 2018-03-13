@@ -13,15 +13,17 @@ static void precision_handle(t_env *e, char *precision)
     i++;
   }
   e->precision = n;
-  e->padding_sym = ' ';
+  if (!e->precision)
+    e->empty_precision = 1;
+  e->padding_0 = 0;
 }
 
 int precision_find(t_env *e, char *precision)
 {
-  if (helper_substr(".", precision[0]) && !e->length && !e->type)
+  if (ft_substr(".", precision[0]) && !e->length && !e->type)
   {
     if (e->precision)
-      helper_error(2);
+      ft_error(2);
     precision_handle(e, precision);
     return (1);
   }

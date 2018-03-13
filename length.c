@@ -2,20 +2,22 @@
 
 static void length_handle(t_env *e, char *length)
 {
-  if ((length[0] == 'l' && length[1] == 'l')
-  || length[0] == 'l' || length[0] == 'z'
+  if (length[0] == 'l' && length[1] == 'l')
+    e->shift = 0;
+  else if (length[0] == 'l' || length[0] == 'z'
   || length[0] == 'j')
-    e->len_long = 1;
-  else if ((length[0] == 'h' && length[1] == 'h')
-  || length[0] == 'h')
-    e->len_short = 1;
+    e->shift = 0;
+  else if (length[0] == 'h' && length[1] == 'h')
+    e->shift = 56;
+  else if (length[0] == 'h')
+    e->shift = 48;
 }
 
 int length_find(t_env *e, char *length)
 {
   if (!e->type
     && ((length[0] == 'l' && length[1] == 'l')
-    || (length[0] == 'h' && length[1] == 'h') || helper_substr("hljz", length[0])))
+    || (length[0] == 'h' && length[1] == 'h') || ft_substr("hljz", length[0])))
     {
       if (!e->length)
         length_handle(e, length);

@@ -2,7 +2,7 @@
 
 int type_find(char type)
 {
-  return helper_substr("sSpdDioOuUxXcC", type);
+  return ft_substr("sSpdDioOuUxXcC", type);
 }
 
 void (*types(int action))(t_env *e)
@@ -35,23 +35,24 @@ void type_d_i(t_env *e)
   char *s;
   int len;
   int padding;
+  int sign;
 
   n = va_arg(e->args, long int);
-  if (e->len_short)
-    n = (n << 48) >> 48;
-  else if (!e->len_long)
-    n = (n << 32) >> 32;
+  n = (n << e->shift) >> e->shift;
   s = itoa_long(e, n);
   len = ft_strlen(s);
   e->precision = e->precision < len ? len : e->precision;
-  padding = e->width > e->precision ? e->width - e->precision : 0;
-  buffer_fill_char(e, e->padding_sym, e->left_align ? 0 : padding);
-  buffer_fill_char(e, e->neg ? '-' : '+', (e->plus_sign && !e->neg) || e->neg);
+  padding = e->width > e->precision ?
+            e->width - e->precision - (e->plus_sign || e->neg) : 0;
+  sign = (e->plus_sign && !e->neg) || e->neg;
+  buffer_fill_char(e, ' ', e->pre_space && !padding);
+  buffer_fill_char(e, e->neg ? '-' : '+', e->padding_0 && sign);
+  buffer_fill_char(e, e->padding_0 ? '0' : ' ', e->left_align ? 0 : padding);
+  buffer_fill_char(e, e->neg ? '-' : '+', !e->padding_0 && sign);
   buffer_fill_char(e, '0', e->precision > len ? e->precision - len : 0);
   buffer_fill_string(e, s);
   buffer_fill_char(e, ' ', e->left_align ? padding : 0);
   free(s);
-  e->type = 1;
 }
 
 void type_s(t_env *e)

@@ -4,9 +4,9 @@ int main(void)
 {
   char *pointer;
 
-  ft_printf("placeholder right here: %10.5d it's over\n", 30);
+  ft_printf("ft_printf: |%lld|\n", -9223372036854775808);
 
-  printf("placeholder right here: %10.5d it's over\n", 30);
+  printf("   printf: |%lld|\n", -9223372036854775808);
 
   return 0;
 }

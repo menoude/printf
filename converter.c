@@ -12,7 +12,7 @@ void converter_parse(t_env *e, char *format, int *index)
     else if (format[i] == '%')
       break;
     else
-      helper_error(2);
+      ft_error(2);
   }
   converter_convert(e, format + i);
   i++;
@@ -25,4 +25,5 @@ void converter_convert(t_env *e, char *type)
 
   key = (int) *type;
   types(key)(e);
+  e->type = 1;
 }
