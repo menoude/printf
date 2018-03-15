@@ -15,12 +15,12 @@ void buffer_fill_char(t_env *e, char c, int n)
   }
 }
 
-void buffer_fill_string(t_env *e, char *str)
+void buffer_fill_string(t_env *e, char *str, int n)
 {
   int i;
 
   i = 0;
-  while (str[i])
+  while (str[i] && i < n)
   {
     e->buffer[e->buffer_index] = str[i];
     e->buffer_index++;

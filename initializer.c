@@ -12,7 +12,8 @@ void initializer_init(t_env *e)
     .plus_sign = 0,
     .width = 0,
     .precision = 0,
-    .empty_precision = 0,
+    .has_precision = 0,
+    .precision_zero = 0,
     .length = 0,
     .shift = 32,
     .type = 0,
@@ -30,7 +31,8 @@ void initializer_reset(t_env *e)
     e->plus_sign = 0;
     e->width = 0;
     e->precision = 0;
-    e->empty_precision = 0;
+    e->has_precision = 0;
+    e->precision_zero = 0;
     e->length = 0;
     e->shift = 32;
     e->type = 0;

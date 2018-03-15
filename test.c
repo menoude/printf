@@ -4,9 +4,9 @@ int main(void)
 {
   char *pointer;
 
-  ft_printf("ft_printf: |%lld|\n", -9223372036854775808);
+  ft_printf("ft_printf: |%#.o %#.0o|\n", 0, 0);
 
-  printf("   printf: |%lld|\n", -9223372036854775808);
+  printf("   printf: |%#.o %#.0o|\n", 0, 0);
 
   return 0;
 }

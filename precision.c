@@ -13,8 +13,9 @@ static void precision_handle(t_env *e, char *precision)
     i++;
   }
   e->precision = n;
+  e->has_precision = 1;
   if (!e->precision)
-    e->empty_precision = 1;
+    e->precision_zero = 1;
   e->padding_0 = 0;
 }
 

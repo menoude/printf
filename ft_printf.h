@@ -35,7 +35,8 @@ typedef struct s_env
     int width;
 
     int precision;
-    int empty_precision;
+    int has_precision;
+    int precision_zero;
 
     int length;
     int shift;
@@ -54,12 +55,13 @@ int ft_substr(char *haystack, char needle);
 long int ft_abs_value(long int number);
 
 char *itoa_long(t_env *e, long int n);
+char *itoa_long_base(t_env *e, unsigned long int n, int base, char *symbols);
 
 void initializer_init(t_env *e);
 void initializer_reset(t_env *e);
 
 void buffer_fill_char(t_env *e, char c, int n);
-void buffer_fill_string(t_env *e, char *str);
+void buffer_fill_string(t_env *e, char *str, int n);
 void buffer_print(t_env *e);
 
 void converter_parse(t_env *e, char *format, int *index);
