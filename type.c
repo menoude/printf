@@ -211,12 +211,28 @@ void type_X(t_env *e)
 
 void type_u(t_env *e)
 {
-  (void)e;
+  long unsigned int n;
+  char *s;
+  int len;
+  int padding;
+
+  n = va_arg(e->args, long unsigned int);
+  n = (n << e->shift) >> e->shift;
+  s = itoa_long_base(e, n, 10, "0123456789");
+  len = ft_strlen(s);
+  e->precision = e->precision < len ? len : e->precision;
+  padding = e->width > e->precision ? e->width - e->precision : 0;
+  buffer_fill_char(e, e->padding_0 ? '0' : ' ', e->left_align ? 0 : padding);
+  buffer_fill_char(e, '0', e->precision > len ? e->precision - len : 0);
+  buffer_fill_string(e, s, len);
+  buffer_fill_char(e, ' ', e->left_align ? padding : 0);
+  free(s);
 }
 
 void type_U(t_env *e)
 {
-  e->type = 1;
+  e->shift = 0;
+  types('u')(e);
 }
 
 void type_percent(t_env *e)
