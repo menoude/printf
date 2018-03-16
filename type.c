@@ -86,6 +86,11 @@ void type_c(t_env *e)
   char c;
   int padding;
 
+  if (!e->shift)
+  {
+    types('C')(e);
+    return ;
+  }
   c = (char) va_arg(e->args, int);
   padding = e->width > 1 ? e->width - 1 : 0;
   buffer_fill_char(e, ' ', !e->left_align ? padding : 0);
@@ -95,14 +100,32 @@ void type_c(t_env *e)
 
 void type_S(t_env *e)
 {
-  e->shift = 0;
-  types('s')(e);
+  int *c;
+  int i;
+
+  c = va_arg(e->args, int *);
+  i = 0;
+  while (c[i] != 0)
+  {
+    buffer_fill_char(e, (char) c[0], 1);
+    buffer_fill_char(e, (char) c[0] >> 8, 1);
+    buffer_fill_char(e, (char) c[0] >> 16, 1);
+    buffer_fill_char(e, (char) c[0] >> 24, 1);
+    i++;
+  }
 }
 
 void type_C(t_env *e)
 {
-  e->shift = 0;
-  types('c')(e);
+  int *c;
+  // int padding;
+
+  c = va_arg(e->args, int *);
+  wprintf(L"c: %lc\n", c);
+  buffer_fill_char(e, (char) c, 1);
+  buffer_fill_char(e, (char) c >> 8, 1);
+  buffer_fill_char(e, (char) c >> 16, 1);
+  buffer_fill_char(e, (char) c >> 24, 1);
 }
 
 void type_p(t_env *e)
@@ -140,6 +163,8 @@ void type_o(t_env *e)
   n = (n << e->shift) >> e->shift;
   s = itoa_long_base(e, n, 8, "012345678");
   len = ft_strlen(s);
+  if (e->precision > len)
+    e->alternate_form = 0;
   e->precision = e->precision < len ? len : e->precision;
   padding = e->width > e->precision ?
             e->width - e->precision -
@@ -147,9 +172,10 @@ void type_o(t_env *e)
   buffer_fill_char(e, ' ', e->pre_space && !padding);
   buffer_fill_char(e, '0', e->alternate_form && len && s[0] != '0' && !padding);
   buffer_fill_char(e, e->padding_0 ? '0' : ' ', e->left_align ? 0 : padding);
-  buffer_fill_char(e, '0', !(e->padding_0 && padding) && e->alternate_form && len && s[0] != '0');
+  buffer_fill_char(e, '0', e->alternate_form && len && s[0] != '0' && padding);
   buffer_fill_char(e, '0', e->precision > len ? e->precision - len : 0);
-  buffer_fill_string(e, len ? s : "0", !len ? 1 : len);
+  if (!(!n && e->precision_zero && !e->alternate_form))
+    buffer_fill_string(e, len ? s : "0", !len ? 1 : len);
   buffer_fill_char(e, ' ', e->left_align ? padding : 0);
   free(s);
 }

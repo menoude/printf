@@ -4,9 +4,10 @@ int main(void)
 {
   char *pointer;
 
-  ft_printf("ft_printf: |%#.o %#.0o|\n", 0, 0);
+  setlocale(LC_ALL, "en_US.UTF-8");
 
-  printf("   printf: |%#.o %#.0o|\n", 0, 0);
+  ft_printf("ft_printf: |%lc %lc %lc %lc %lc %lc|\n", 0x2D4E, 0x2D3B, 0x2D4F, 0x2D4F, 0x2D30, 0x2D37);
+  printf("   printf: |%C %C %C %C %C %C|\n", 0x2D4E, 0x2D3B, 0x2D4F, 0x2D4F, 0x2D30, 0x2D37);
 
   return 0;
 }

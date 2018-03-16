@@ -17,6 +17,8 @@
 #include "./libft/includes/libft.h"
 #include <stdarg.h>
 # include <stdio.h> // a enlever !!!
+#include <wchar.h>
+#include <locale.h>
 
 #define BUFFER_SIZE 1000
 
