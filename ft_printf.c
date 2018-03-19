@@ -20,8 +20,10 @@ int   ft_printf(char *format, ...)
       buffer_fill_char(&e, format[i], 1);
       i++;
     }
+    if (e.err)
+      return (-1);
   }
   buffer_print(&e);
   va_end(e.args);
-  return e.nb_printed;
+  return (e.nb_printed);
 }

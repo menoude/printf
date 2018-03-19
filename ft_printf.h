@@ -46,6 +46,7 @@ typedef struct s_env
     int type;
     int neg;
 
+    int err;
     va_list args;
 }             t_env;
 
@@ -64,6 +65,7 @@ void initializer_reset(t_env *e);
 
 void buffer_fill_char(t_env *e, char c, int n);
 void buffer_fill_string(t_env *e, char *str, int n);
+void buffer_fill_UTF(t_env *e, int c);
 void buffer_print(t_env *e);
 
 void converter_parse(t_env *e, char *format, int *index);

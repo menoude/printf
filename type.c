@@ -117,15 +117,16 @@ void type_S(t_env *e)
 
 void type_C(t_env *e)
 {
-  int *c;
+  int c;
   // int padding;
 
-  c = va_arg(e->args, int *);
-  wprintf(L"c: %lc\n", c);
-  buffer_fill_char(e, (char) c, 1);
-  buffer_fill_char(e, (char) c >> 8, 1);
-  buffer_fill_char(e, (char) c >> 16, 1);
-  buffer_fill_char(e, (char) c >> 24, 1);
+  c = va_arg(e->args, int);
+  if (c < 0 || (c > 127 && MB_CUR_MAX <= 1))
+  {
+    e->err = 1;
+    return ;
+  }
+  buffer_fill_UTF(e, c);
 }
 
 void type_p(t_env *e)

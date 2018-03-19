@@ -24,7 +24,10 @@ int precision_find(t_env *e, char *precision)
   if (ft_substr(".", precision[0]) && !e->length && !e->type)
   {
     if (e->precision)
-      ft_error(2);
+    {
+      e->err = 1;
+      return (0);
+    }
     precision_handle(e, precision);
     return (1);
   }

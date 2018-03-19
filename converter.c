@@ -12,8 +12,10 @@ void converter_parse(t_env *e, char *format, int *index)
     else if (format[i] == '%')
       break;
     else
-      ft_error(2);
+      e->err = 1;
   }
+  if (e->err)
+    return ;
   converter_convert(e, format + i);
   i++;
   *index = i;
