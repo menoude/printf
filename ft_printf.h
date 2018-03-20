@@ -21,6 +21,7 @@
 #include <locale.h>
 
 #define BUFFER_SIZE 1000
+#define UTF_MAX 1114111
 
 typedef struct s_env
 {
@@ -56,6 +57,7 @@ int   ft_printf(char *format, ...);
 void ft_error(int code);
 int ft_substr(char *haystack, char needle);
 long int ft_abs_value(long int number);
+int ft_wstrlen(int *str);
 
 char *itoa_long(t_env *e, long int n);
 char *itoa_long_base(t_env *e, unsigned long int n, int base, char *symbols);
@@ -65,7 +67,8 @@ void initializer_reset(t_env *e);
 
 void buffer_fill_char(t_env *e, char c, int n);
 void buffer_fill_string(t_env *e, char *str, int n);
-void buffer_fill_UTF(t_env *e, int c);
+void buffer_fill_UTF_char(t_env *e, int c);
+void buffer_fill_UTF_string(t_env *e, int *str, int len);
 void buffer_print(t_env *e);
 
 void converter_parse(t_env *e, char *format, int *index);

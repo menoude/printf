@@ -15,11 +15,9 @@ void buffer_fill_char(t_env *e, char c, int n)
   }
 }
 
-void buffer_fill_UTF(t_env *e, int c)
+void buffer_fill_UTF_char(t_env *e, int c)
 {
-  if (c > 1114111)
-    return ;
-  else if (c > 65535)
+  if (c > 65535)
   {
     buffer_fill_char(e, (char) 0b11110000 | (0b111 & (c >> 18)), 1);
     buffer_fill_char(e, (char) 0b10000000 | (0b111111 & (c >> 12)), 1);
@@ -39,7 +37,24 @@ void buffer_fill_UTF(t_env *e, int c)
   }
   else
     buffer_fill_char(e, (char) c, 1);
-  // e->nb_printed -= (c < 1114111) * ((c > 127) + (c > 2047) + (c > 65535));
+}
+
+void buffer_fill_UTF_string(t_env *e, int *str, int len)
+{
+  int i;
+
+  i = 0;
+  while (i < len)
+  {
+    if (str[i] < 0 || (str[i] > 127 && MB_CUR_MAX <= 1)
+        || str[i] > UTF_MAX || (str[i] > 0xd800))
+    {
+      e->err = 1;
+      return ;
+    }
+    buffer_fill_UTF_char(e, str[i]);
+    i++;
+  }
 }
 
 void buffer_fill_string(t_env *e, char *str, int n)

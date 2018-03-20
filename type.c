@@ -35,22 +35,20 @@ void type_d_i(t_env *e)
   char *s;
   int len;
   int padding;
-  int sign;
+  // int sign;
 
   n = va_arg(e->args, long int);
   n = (n << e->shift) >> e->shift;
   s = itoa_long(e, n);
   len = ft_strlen(s);
-  e->precision = e->precision < len ? len : e->precision;
-  padding = e->width > e->precision ?
-            e->width - e->precision - (e->plus_sign || e->neg) : 0;
-  sign = (e->plus_sign && !e->neg) || e->neg;
-  buffer_fill_char(e, ' ', (e->pre_space && !padding)
-                  || (e->pre_space && e->padding_0));
-  padding = e->pre_space && e->padding_0 ? padding - 1 : padding;
-  buffer_fill_char(e, e->neg ? '-' : '+', e->padding_0 && sign);
-  buffer_fill_char(e, e->padding_0 ? '0' : ' ', e->left_align ? 0 : padding);
-  buffer_fill_char(e, e->neg ? '-' : '+', !e->padding_0 && sign);
+  padding = e->precision > len ? e->width - e->precision : e->width - len;
+  padding -= (e->neg || (e->plus_sign && n >= 0));
+  buffer_fill_char(e, ' ', e->pre_space && !e->neg && !e->plus_sign);
+  padding -= e->pre_space && !e->neg && !e->plus_sign;
+  buffer_fill_char(e, ' ', e->left_align ? 0 : padding * !e->padding_0);
+  buffer_fill_char(e, '+', e->plus_sign && n >= 0);
+  buffer_fill_char(e, '-', e->neg);
+  buffer_fill_char(e, '0', e->left_align ? 0 : padding * e->padding_0);
   buffer_fill_char(e, '0', e->precision > len ? e->precision - len : 0);
   buffer_fill_string(e, s, len);
   buffer_fill_char(e, ' ', e->left_align ? padding : 0);
@@ -64,6 +62,11 @@ void type_s(t_env *e)
   int len;
   int to_free;
 
+  if (!e->shift)
+  {
+    types('S')(e);
+    return ;
+  }
   to_free = 0;
   s = va_arg(e->args, char *);
   if (s == NULL)
@@ -78,7 +81,7 @@ void type_s(t_env *e)
   buffer_fill_string(e, s, len);
   buffer_fill_char(e, ' ', e->left_align ? padding : 0);
   if (to_free)
-    free(s);
+  free(s);
 }
 
 void type_c(t_env *e)
@@ -98,35 +101,45 @@ void type_c(t_env *e)
   buffer_fill_char(e, ' ', e->left_align ? padding : 0);
 }
 
-void type_S(t_env *e)
-{
-  int *c;
-  int i;
-
-  c = va_arg(e->args, int *);
-  i = 0;
-  while (c[i] != 0)
-  {
-    buffer_fill_char(e, (char) c[0], 1);
-    buffer_fill_char(e, (char) c[0] >> 8, 1);
-    buffer_fill_char(e, (char) c[0] >> 16, 1);
-    buffer_fill_char(e, (char) c[0] >> 24, 1);
-    i++;
-  }
-}
-
 void type_C(t_env *e)
 {
   int c;
-  // int padding;
+  int padding;
 
   c = va_arg(e->args, int);
-  if (c < 0 || (c > 127 && MB_CUR_MAX <= 1))
+  if (c < 0 || (c > 127 && MB_CUR_MAX <= 1) || c > UTF_MAX
+      || (c >= 0xD800 && c <= 0xDFFF))
   {
     e->err = 1;
     return ;
   }
-  buffer_fill_UTF(e, c);
+  padding = e->width > 1 ? e->width - 1 - (c > 127) - (c > 2047) - (c > 65535) : 0;
+  buffer_fill_char(e, ' ', !e->left_align ? padding : 0);
+  buffer_fill_UTF_char(e, c);
+  buffer_fill_char(e, ' ', e->left_align ? padding : 0);
+}
+
+void type_S(t_env *e)
+{
+  int *str;
+  int padding;
+  int len;
+  int null_pointer;
+
+  null_pointer = 0;
+  str = va_arg(e->args, int *);
+  if (str == NULL)
+    null_pointer = 1;
+  len = ft_wstrlen(str);
+  if (len == -1)
+  {
+    e->err = 1;
+    return ;
+  }
+  padding = e->width > len ? e->width - len : 0;
+  buffer_fill_char(e, ' ', !e->left_align ? padding : 0);
+  buffer_fill_UTF_string(e, str != NULL ? str : L"(null)", len);
+  buffer_fill_char(e, ' ', e->left_align ? padding : 0);
 }
 
 void type_p(t_env *e)
@@ -165,18 +178,18 @@ void type_o(t_env *e)
   s = itoa_long_base(e, n, 8, "012345678");
   len = ft_strlen(s);
   if (e->precision > len)
-    e->alternate_form = 0;
+  e->alternate_form = 0;
   e->precision = e->precision < len ? len : e->precision;
   padding = e->width > e->precision ?
-            e->width - e->precision -
-            (e->alternate_form && s[0] != '0') : 0;
+  e->width - e->precision -
+  (e->alternate_form && s[0] != '0') : 0;
   buffer_fill_char(e, ' ', e->pre_space && !padding);
   buffer_fill_char(e, '0', e->alternate_form && len && s[0] != '0' && !padding);
   buffer_fill_char(e, e->padding_0 ? '0' : ' ', e->left_align ? 0 : padding);
   buffer_fill_char(e, '0', e->alternate_form && len && s[0] != '0' && padding);
   buffer_fill_char(e, '0', e->precision > len ? e->precision - len : 0);
   if (!(!n && e->precision_zero && !e->alternate_form))
-    buffer_fill_string(e, len ? s : "0", !len ? 1 : len);
+  buffer_fill_string(e, len ? s : "0", !len ? 1 : len);
   buffer_fill_char(e, ' ', e->left_align ? padding : 0);
   free(s);
 }
@@ -200,7 +213,7 @@ void type_x(t_env *e)
   len = ft_strlen(s);
   e->precision = e->precision < len ? len : e->precision;
   padding = e->width > e->precision ?
-            e->width - e->precision - e->alternate_form * 2 * (n != 0) : 0;
+  e->width - e->precision - e->alternate_form * 2 * (n != 0) : 0;
   buffer_fill_char(e, ' ', e->pre_space && !padding);
   buffer_fill_string(e, "0x", e->alternate_form * 2 * (n != 0 && e->padding_0));
   buffer_fill_char(e, e->padding_0 ? '0' : ' ', e->left_align ? 0 : padding);
@@ -224,7 +237,7 @@ void type_X(t_env *e)
   len = ft_strlen(s);
   e->precision = e->precision < len ? len : e->precision;
   padding = e->width > e->precision ?
-            e->width - e->precision - e->alternate_form * 2 * (n != 0) : 0;
+  e->width - e->precision - e->alternate_form * 2 * (n != 0) : 0;
   buffer_fill_char(e, ' ', e->pre_space && !padding);
   buffer_fill_string(e, "0X", e->alternate_form * 2 * (n != 0 && e->padding_0));
   buffer_fill_char(e, e->padding_0 ? '0' : ' ', e->left_align ? 0 : padding);
