@@ -35,7 +35,6 @@ void type_d_i(t_env *e)
   char *s;
   int len;
   int padding;
-  // int sign;
 
   n = va_arg(e->args, long int);
   n = (n << e->shift) >> e->shift;
@@ -53,6 +52,23 @@ void type_d_i(t_env *e)
   buffer_fill_string(e, s, len);
   buffer_fill_char(e, ' ', e->left_align ? padding : 0);
   free(s);
+}
+
+void type_c(t_env *e)
+{
+  char c;
+  int padding;
+
+  if (!e->shift)
+  {
+    types('C')(e);
+    return ;
+  }
+  c = (char) va_arg(e->args, int);
+  padding = e->width > 1 ? e->width - 1 : 0;
+  buffer_fill_char(e, ' ', !e->left_align ? padding : 0);
+  buffer_fill_char(e, c, 1);
+  buffer_fill_char(e, ' ', e->left_align ? padding : 0);
 }
 
 void type_s(t_env *e)
@@ -84,23 +100,6 @@ void type_s(t_env *e)
   free(s);
 }
 
-void type_c(t_env *e)
-{
-  char c;
-  int padding;
-
-  if (!e->shift)
-  {
-    types('C')(e);
-    return ;
-  }
-  c = (char) va_arg(e->args, int);
-  padding = e->width > 1 ? e->width - 1 : 0;
-  buffer_fill_char(e, ' ', !e->left_align ? padding : 0);
-  buffer_fill_char(e, c, 1);
-  buffer_fill_char(e, ' ', e->left_align ? padding : 0);
-}
-
 void type_C(t_env *e)
 {
   int c;
@@ -108,7 +107,7 @@ void type_C(t_env *e)
 
   c = va_arg(e->args, int);
   if (c < 0 || (c > 127 && MB_CUR_MAX <= 1) || c > UTF_MAX
-      || (c >= 0xD800 && c <= 0xDFFF))
+  || (c >= 0xD800 && c <= 0xDFFF))
   {
     e->err = 1;
     return ;
@@ -124,22 +123,27 @@ void type_S(t_env *e)
   int *str;
   int padding;
   int len;
-  int null_pointer;
 
-  null_pointer = 0;
   str = va_arg(e->args, int *);
-  if (str == NULL)
-    null_pointer = 1;
   len = ft_wstrlen(str);
-  if (len == -1)
+  if (len == -2)
   {
-    e->err = 1;
-    return ;
+    len = e->has_precision && e->precision < 6 ? e->precision : 6;
+    padding = e->width > len ? e->width - len : 0;
+    buffer_fill_char(e, ' ', !e->left_align ? padding : 0);
+    buffer_fill_UTF_string(e, L"(null)", len);
+    buffer_fill_char(e, ' ', e->left_align ? padding : 0);
   }
-  padding = e->width > len ? e->width - len : 0;
-  buffer_fill_char(e, ' ', !e->left_align ? padding : 0);
-  buffer_fill_UTF_string(e, str != NULL ? str : L"(null)", len);
-  buffer_fill_char(e, ' ', e->left_align ? padding : 0);
+  else if (len == -1)
+    e->err = 1;
+  else
+  {
+    len = e->has_precision && e->precision < len ? e->precision : len;
+    padding = e->width > len ? e->width - len : 0;
+    buffer_fill_char(e, ' ', !e->left_align ? padding : 0);
+    buffer_fill_UTF_string(e, str, len);
+    buffer_fill_char(e, ' ', e->left_align ? padding : 0);
+  }
 }
 
 void type_p(t_env *e)

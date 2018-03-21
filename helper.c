@@ -29,12 +29,14 @@ int ft_wstrlen(int *str)
   int i;
   int len;
 
+  if (!str)
+    return (-2);
   len = 0;
   i = 0;
   while (str[i])
   {
     if (str[i] < 0 || str[i] > UTF_MAX || (str[i] > 127 && MB_CUR_MAX <= 1)
-        || (str[i] >= 0xD800 && str[i] <= 0xDFFF)) 
+        || (str[i] >= 0xD800 && str[i] <= 0xDFFF))
       return (-1);
     else if (str[i] > 65535)
       len += 4;

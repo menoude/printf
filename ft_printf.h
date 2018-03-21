@@ -68,7 +68,7 @@ void initializer_reset(t_env *e);
 void buffer_fill_char(t_env *e, char c, int n);
 void buffer_fill_string(t_env *e, char *str, int n);
 void buffer_fill_UTF_char(t_env *e, int c);
-void buffer_fill_UTF_string(t_env *e, int *str, int len);
+void buffer_fill_UTF_string(t_env *e, int *str, int n);
 void buffer_print(t_env *e);
 
 void converter_parse(t_env *e, char *format, int *index);
