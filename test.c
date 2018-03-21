@@ -6,10 +6,10 @@ int main(void)
 
   setlocale(LC_ALL, "en_US.UTF-8");
 
-  int val1 = ft_printf("ft_printf: |%2.12ls|\n", L"┬─┬ ノ( ゜-゜ノ)");
+  int val1 = ft_printf("ft_printf: |%04.2%|\n");
   printf("%d\n", val1);
 
-  int val2 = printf("   printf: |%2.12ls|\n", L"┬─┬ ノ( ゜-゜ノ)");
+  int val2 = printf("   printf: |%04.2%|\n");
   printf("%d\n", val2);
 
   return 0;

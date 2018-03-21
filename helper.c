@@ -27,13 +27,13 @@ long int ft_abs_value(long int number)
 int ft_wcharlen(int c)
 {
   if (c > 65535)
-  return (4);
+    return (4);
   else if (c > 2047)
-  return (3);
+    return (3);
   else if (c > 127)
-  return (2);
+    return (2);
   else
-  return (1);
+    return (1);
 }
 
 int ft_wstrlen(t_env *e, int *str)

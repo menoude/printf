@@ -139,7 +139,6 @@ void type_S(t_env *e)
   else
   {
     padding = e->width > len ? e->width - len : 0;
-    // printf("len %d padding %d\n", len, padding);
     buffer_fill_char(e, ' ', !e->left_align ? padding : 0);
     buffer_fill_UTF_string(e, str, len);
     buffer_fill_char(e, ' ', e->left_align ? padding : 0);
@@ -284,7 +283,12 @@ void type_percent(t_env *e)
   int padding;
 
   padding = e->width > 1 ? e->width - 1 : 0;
-  buffer_fill_char(e, e->padding_0 ? '0' : ' ', !e->left_align ? padding : 0);
+  printf("padding0 :%d pre_space: %d\n", e->padding_0, e->pre_space);
+  if (!e->left_align)
+  {
+    buffer_fill_char(e, '0', e->padding_0 && !e->pre_space ? padding : 0);
+    buffer_fill_char(e, ' ', !e->padding_0 ? padding : 0);
+  }
   buffer_fill_char(e, '%', 1);
   buffer_fill_char(e, ' ', e->left_align ? padding : 0);
 }

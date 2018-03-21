@@ -57,14 +57,16 @@ void buffer_fill_UTF_char(t_env *e, int c)
 void buffer_fill_UTF_string(t_env *e, int *str, int n)
 {
   int i;
+  int char_len;
 
   i = 0;
   while (str[i] != 0 && i < n)
   {
-    // printf("i = %d & n = %d\n", i, n);
-      buffer_fill_UTF_char(e, str[i]);
-        i++;
-        n = n - ft_wcharlen(str[i]) + 1;
+    char_len = ft_wcharlen(str[i]);
+    buffer_fill_UTF_char(e, str[i]);
+    i++;
+    if (char_len > 1)
+      n -= char_len - 1;
   }
 }
 
