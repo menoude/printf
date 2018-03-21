@@ -57,7 +57,8 @@ int   ft_printf(char *format, ...);
 void ft_error(int code);
 int ft_substr(char *haystack, char needle);
 long int ft_abs_value(long int number);
-int ft_wstrlen(int *str);
+int ft_wcharlen(int c);
+int ft_wstrlen(t_env *e, int *str);
 
 char *itoa_long(t_env *e, long int n);
 char *itoa_long_base(t_env *e, unsigned long int n, int base, char *symbols);
@@ -68,7 +69,7 @@ void initializer_reset(t_env *e);
 void buffer_fill_char(t_env *e, char c, int n);
 void buffer_fill_string(t_env *e, char *str, int n);
 void buffer_fill_UTF_char(t_env *e, int c);
-int buffer_fill_UTF_string(t_env *e, int *str, int n);
+void buffer_fill_UTF_string(t_env *e, int *str, int n);
 void buffer_print(t_env *e);
 
 void converter_parse(t_env *e, char *format, int *index);

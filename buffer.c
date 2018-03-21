@@ -54,28 +54,18 @@ void buffer_fill_UTF_char(t_env *e, int c)
     buffer_fill_char(e, (char) c, 1);
 }
 
-int buffer_fill_UTF_string(t_env *e, int *str, int n)
+void buffer_fill_UTF_string(t_env *e, int *str, int n)
 {
   int i;
 
   i = 0;
   while (str[i] != 0 && i < n)
   {
-    if (str[i] < 0 || (str[i] > 127 && MB_CUR_MAX <= 1)
-        || str[i] > UTF_MAX || (str[i] >= 0xd800 && str[i] <= 0xDFFF ))
-    {
-      e->err = 1;
-      return (0);
-    }
-    // faut comprendre le delire ici
-    if (n - i > (str[i] > 127) + (str[i] > 2047) + (str[i] > 65535))
+    // printf("i = %d & n = %d\n", i, n);
       buffer_fill_UTF_char(e, str[i]);
-    else
-      return ((str[i] > 127) + (str[i] > 2047) + (str[i] > 65535) - n - i);
-    n -= (str[i] > 127) + (str[i] > 2047) + (str[i] > 65535);
-    i++;
+        i++;
+        n = n - ft_wcharlen(str[i]) + 1;
   }
-  return (0);
 }
 
 void buffer_print(t_env *e)

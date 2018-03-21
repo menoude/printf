@@ -125,7 +125,7 @@ void type_S(t_env *e)
   int len;
 
   str = va_arg(e->args, int *);
-  len = ft_wstrlen(str);
+  len = ft_wstrlen(e, str);
   if (len == -2)
   {
     len = e->has_precision && e->precision < 6 ? e->precision : 6;
@@ -138,12 +138,10 @@ void type_S(t_env *e)
     e->err = 1;
   else
   {
-    len = e->has_precision && e->precision < len ? e->precision : len;
     padding = e->width > len ? e->width - len : 0;
+    // printf("len %d padding %d\n", len, padding);
     buffer_fill_char(e, ' ', !e->left_align ? padding : 0);
-printf("padding %d\n", padding);
-    padding -= buffer_fill_UTF_string(e, str, len);
-    printf("padding %d\n", padding);
+    buffer_fill_UTF_string(e, str, len);
     buffer_fill_char(e, ' ', e->left_align ? padding : 0);
   }
 }

@@ -24,7 +24,19 @@ long int ft_abs_value(long int number)
   return (number < 0 ? number * -1 : number);
 }
 
-int ft_wstrlen(int *str)
+int ft_wcharlen(int c)
+{
+  if (c > 65535)
+  return (4);
+  else if (c > 2047)
+  return (3);
+  else if (c > 127)
+  return (2);
+  else
+  return (1);
+}
+
+int ft_wstrlen(t_env *e, int *str)
 {
   int i;
   int len;
@@ -36,17 +48,15 @@ int ft_wstrlen(int *str)
   while (str[i])
   {
     if (str[i] < 0 || str[i] > UTF_MAX || (str[i] > 127 && MB_CUR_MAX <= 1)
-        || (str[i] >= 0xD800 && str[i] <= 0xDFFF))
+    || (str[i] >= 0xD800 && str[i] <= 0xDFFF))
       return (-1);
-    else if (str[i] > 65535)
-      len += 4;
-    else if (str[i] > 2047)
-      len += 3;
-    else if (str[i] > 127)
-      len += 2;
+    else if (e->has_precision && len + ft_wcharlen(str[i]) > e->precision)
+      return (len);
     else
-      len += 1;
-    i++;
+    {
+      len += ft_wcharlen(str[i]);
+      i++;
+    }
   }
   return (len);
 }
