@@ -283,7 +283,6 @@ void type_percent(t_env *e)
   int padding;
 
   padding = e->width > 1 ? e->width - 1 : 0;
-  printf("padding0 :%d pre_space: %d\n", e->padding_0, e->pre_space);
   if (!e->left_align)
   {
     buffer_fill_char(e, '0', e->padding_0 && !e->pre_space ? padding : 0);
