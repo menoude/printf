@@ -16,7 +16,6 @@ static void precision_handle(t_env *e, char *precision)
   e->has_precision = 1;
   if (!e->precision)
     e->precision_zero = 1;
-  e->padding_0 = 0;
 }
 
 int precision_find(t_env *e, char *precision)
