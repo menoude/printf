@@ -141,7 +141,9 @@ void type_S(t_env *e)
     len = e->has_precision && e->precision < len ? e->precision : len;
     padding = e->width > len ? e->width - len : 0;
     buffer_fill_char(e, ' ', !e->left_align ? padding : 0);
-    buffer_fill_UTF_string(e, str, len);
+printf("padding %d\n", padding);
+    padding -= buffer_fill_UTF_string(e, str, len);
+    printf("padding %d\n", padding);
     buffer_fill_char(e, ' ', e->left_align ? padding : 0);
   }
 }
