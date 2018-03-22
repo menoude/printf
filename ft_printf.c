@@ -23,14 +23,14 @@ int	ft_printf(char *format, ...)
 	i = 0;
 	while (format[i])
 	{
-		if (format[i] == '%')
+		if (format[i] == '%' && format[i + 1])
 		{
 			converter_parse(&e, format, &i);
 			initializer_reset(&e);
 		}
 		else
 		{
-			buffer_fill_char(&e, format[i], 1);
+			buffer_fill_char(&e, format[i], format[i] != '%');
 			i++;
 		}
 		if (e.err)

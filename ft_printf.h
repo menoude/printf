@@ -16,7 +16,6 @@
 # include <stdlib.h>
 # include "./libft/includes/libft.h"
 # include <stdarg.h>
-# include <stdio.h> // a enlever !!!
 # include <wchar.h>
 # include <locale.h>
 
@@ -91,5 +90,6 @@ void			type_u(t_env *e);
 void			type_lu(t_env *e);
 void			type_p(t_env *e);
 void			type_percent(t_env *e);
+void			type_b(t_env *e);
 
 #endif

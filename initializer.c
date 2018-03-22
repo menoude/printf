@@ -51,6 +51,7 @@ void	initializer_types_init(t_env *e)
 	e->types['c'] = &type_c;
 	e->types['C'] = &type_lc;
 	e->types['%'] = &type_percent;
+	e->types['b'] = &type_b;
 }
 
 void	initializer_reset(t_env *e)

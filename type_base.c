@@ -98,3 +98,29 @@ void	type_maj_x(t_env *e)
 	buffer_fill_char(e, ' ', e->left_align ? padding : 0);
 	free(s);
 }
+
+void	type_b(t_env *e)
+{
+	unsigned long int	n;
+	char				*s;
+	int					len;
+	int					padding;
+
+	n = va_arg(e->args, unsigned long int);
+	n = (n << e->shift) >> e->shift;
+	s = itoa_long_base(e, n, 2, "01");
+	len = ft_strlen(s);
+	e->precision = e->precision < len ? len : e->precision;
+	padding = e->width > e->precision ?
+		e->width - e->precision - e->alternate_form * 2 * (n != 0) : 0;
+	buffer_fill_char(e, ' ', e->pre_space && !padding);
+	buffer_fill_string(e, "0b",
+						e->alternate_form * 2 * (n != 0 && e->padding_0));
+	buffer_fill_char(e, e->padding_0 ? '0' : ' ', e->left_align ? 0 : padding);
+	buffer_fill_string(e, "0b",
+						e->alternate_form * 2 * (n != 0 && !e->padding_0));
+	buffer_fill_char(e, '0', e->precision > len ? e->precision - len : 0);
+	buffer_fill_string(e, s, len);
+	buffer_fill_char(e, ' ', e->left_align ? padding : 0);
+	free(s);
+}

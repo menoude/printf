@@ -14,5 +14,5 @@
 
 int		type_find(char type)
 {
-	return (ft_substr("sSpdDioOuUxXcC", type));
+	return (ft_substr("sSpdDioOuUxXcCb", type));
 }

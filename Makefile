@@ -18,14 +18,9 @@ SRC = ft_printf.c helper.c itoa.c initializer.c buffer.c converter.c \
 		type_base.c type_others.c
 HEADER = ft_printf.h
 BINARIES =	$(SRC:.c=.o)
-CC = gcc -g -Wall -Werror -Wextra #enlever -g
+CC = gcc -Wall -Werror -Wextra
 
-all: $(NAME) test.o
-	$(CC) test.o $(NAME) #a enlever
-	@./a.out #a enlever
-
-test.o: test.c
-	gcc -c -g $<
+all: $(NAME)
 
 $(NAME): $(BINARIES)
 	$(MAKE) -C $(DIR_LIB)
@@ -37,10 +32,10 @@ $(NAME): $(BINARIES)
 
 clean:
 	$(MAKE) -C $(DIR_LIB) clean
-	/bin/rm -f $(BINARIES) test.o ##a enlever
+	/bin/rm -f $(BINARIES)
 fclean: clean
 	$(MAKE) -C $(DIR_LIB) fclean
-	/bin/rm -f $(NAME) a.out #a enlever
+	/bin/rm -f $(NAME)
 re: fclean all
 
 .PHONY: all clean fclean re%
