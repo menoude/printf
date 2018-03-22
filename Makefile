@@ -13,7 +13,9 @@
 NAME = libftprintf.a
 DIR_LIB = libft
 DIR_SRC = srcs
-SRC = ft_printf.c helper.c itoa.c initializer.c buffer.c converter.c format.c width.c precision.c length.c type.c 
+SRC = ft_printf.c helper.c itoa.c initializer.c buffer.c converter.c \
+		format.c width.c precision.c length.c type.c type_dec.c type_chars.c\
+		type_base.c type_others.c
 HEADER = ft_printf.h
 BINARIES =	$(SRC:.c=.o)
 CC = gcc -g -Wall -Werror -Wextra #enlever -g

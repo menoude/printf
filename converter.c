@@ -41,6 +41,6 @@ void	converter_convert(t_env *e, char *type)
 	key = (int)*type;
 	e->padding_0 = e->has_precision && ft_substr("dDixXuUoO", (char)key) ?
 		0 : e->padding_0;
-	types(key)(e);
+	e->types[key](e);
 	e->type = 1;
 }

@@ -34,6 +34,25 @@ void	initializer_init(t_env *e)
 	ft_bzero(e->buffer, BUFFER_SIZE);
 }
 
+void	initializer_types_init(t_env *e)
+{
+	e->types['d'] = &type_d_i;
+	e->types['D'] = &type_ld;
+	e->types['i'] = &type_d_i;
+	e->types['s'] = &type_s;
+	e->types['S'] = &type_ls;
+	e->types['p'] = &type_p;
+	e->types['o'] = &type_o;
+	e->types['O'] = &type_lo;
+	e->types['u'] = &type_u;
+	e->types['U'] = &type_lu;
+	e->types['x'] = &type_x;
+	e->types['X'] = &type_maj_x;
+	e->types['c'] = &type_c;
+	e->types['C'] = &type_lc;
+	e->types['%'] = &type_percent;
+}
+
 void	initializer_reset(t_env *e)
 {
 	e->left_align = 0;

@@ -25,6 +25,7 @@
 
 typedef struct	s_env
 {
+	void	(*types[256]) (struct s_env *);
 	char	buffer[BUFFER_SIZE];
 	int		buffer_index;
 	int		nb_printed;
@@ -58,6 +59,7 @@ char			*itoa_long_base(t_env *e, unsigned long int n,
 								int base, char *symbols);
 
 void			initializer_init(t_env *e);
+void			initializer_types_init(t_env *e);
 void			initializer_reset(t_env *e);
 
 void			buffer_fill_char(t_env *e, char c, int n);
@@ -75,7 +77,6 @@ int				precision_find(t_env *e, char *precision);
 int				length_find(t_env *e, char *length);
 int				type_find(char type);
 
-void			(*types(int action))(t_env *e);
 void			type_d_i(t_env *e);
 void			type_ld(t_env *e);
 void			type_c(t_env *e);

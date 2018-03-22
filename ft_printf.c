@@ -18,6 +18,7 @@ int	ft_printf(char *format, ...)
 	int		i;
 
 	initializer_init(&e);
+	initializer_types_init(&e);
 	va_start(e.args, format);
 	i = 0;
 	while (format[i])
